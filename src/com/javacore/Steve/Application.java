@@ -2,6 +2,8 @@ package com.javacore.Steve;
 
 import com.javacore.Steve.command.ACommand;
 import com.javacore.Steve.command.CommandRegistry;
+import com.javacore.Steve.stage.ApplicationState;
+import com.javacore.Steve.stage.StateIdle;
 
 /**
  * Project for JavaCore course.
@@ -12,26 +14,27 @@ public class Application {
 
      static public final String APP_NAME = "Steve";
      static public final String AUTHOR = "Alexander Isaev";
-     static public final String VERSION = "0.0.1";
+     static public final String VERSION = "0.0.2";
+
+     static ApplicationState currentState;
 
     public static void main(String[] args) {
 
+        changeState(new StateIdle(), "Idle");
         String commandName = "version"; // We enter command name (in console in future) to execute it.
-        ACommand command = CommandRegistry.INSTANCE.getCommand(commandName); // We get command from Singleton and initialize our abstract command instance by it.
-        command.execute();
+        currentState.onCommand(commandName);
 
-        command = CommandRegistry.INSTANCE.getCommand("author");
-        command.execute();
-
-        command = CommandRegistry.INSTANCE.getCommand("name");
-        command.execute();
-
-        command = CommandRegistry.INSTANCE.getCommand("help");
-        command.execute();
-
+        currentState.onCommand("author");
+        currentState.onCommand("help");
     }
 
+    public static void changeState(ApplicationState newState, String commandName) {
+        if (currentState != null)
+            currentState.exit();
 
+        currentState = newState;
+        currentState.enter(commandName);
+    }
 
 
 }

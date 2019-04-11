@@ -9,9 +9,9 @@ public class CommandHelp extends ACommand {
     @Override
     public void execute() {
         ArrayList<String> listOfCommands = CommandRegistry.INSTANCE.listCommands();
-        System.out.println("List of available commands: ");
+        System.out.println(ANSI_YELLOW + "List of available commands: " + ANSI_RESET);
         for (String commandName: listOfCommands) {
-            System.out.println(commandName);
+            System.out.println(ANSI_YELLOW + commandName + ANSI_RESET);
         }
     }
 }

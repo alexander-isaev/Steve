@@ -5,25 +5,47 @@
 package com.javacore.Steve.command;
 
 import java.util.*;
+import static com.javacore.Steve.Application.VERSION;
+import static com.javacore.Steve.Application.AUTHOR;
+import static com.javacore.Steve.Application.APP_NAME;
 
 public enum CommandRegistry {
-
     INSTANCE;
 
-    static Map<String, ACommand> commands; // Do command by it's key.
+    static Map<String, ACommand> commands;
 
     static {
         commands = new HashMap<>();
 
-        commands.put("version", new CommandVersion("version"));
-        CommandAuthor commandAuthor = new CommandAuthor("author"); // To make ability to call method with different names in input.
+        // Version.
+        commands.put("version", new ACommand("version") {
+            @Override
+            public void execute() {
+                System.out.println(ANSI_YELLOW +"My version is: " + VERSION + ANSI_RESET);
+            }
+        });
+
+        // Author.
+        ACommand commandAuthor = new ACommand("author") {
+            @Override
+            public void execute() {
+                System.out.println(ANSI_YELLOW + "My creator is " + AUTHOR + "." + ANSI_RESET);
+            }
+        };
         commands.put("creator", commandAuthor);
         commands.put("maker", commandAuthor);
         commands.put("author", commandAuthor);
-        commands.put("name", new CommandAppName("name"));
-        commands.put("help", new CommandHelp("help"));
 
-        //TODO Anonymous classes instead.
+        // Application Name.
+        commands.put("name", new ACommand("name") {
+            @Override
+            public void execute() {
+                System.out.println(ANSI_YELLOW + "Hi! I'm proud to say that my name is " + APP_NAME + "!" + ANSI_RESET);
+            }
+        });
+
+        // Help (list of all commands).
+        commands.put("help", new CommandHelp("help"));
     }
 
     /**
@@ -45,7 +67,7 @@ public enum CommandRegistry {
     }
 
     /**
-     * Shows list of commands available.
+     * Returns list of all available commands .
      * @return ArrayList with names of all available commands.
      */
     public ArrayList<String> listCommands() {
