@@ -1,10 +1,9 @@
 package com.javacore.Steve.command;
 
-public abstract class ACommand {
+import static com.javacore.Steve.Application.ANSI_RESET;
+import static com.javacore.Steve.Application.ANSI_YELLOW;
 
-    // Colors for strings:
-    protected static final String ANSI_YELLOW = "\u001B[33m";
-    protected static final String ANSI_RESET = "\u001B[0m";
+public abstract class ACommand {
 
     protected String name;
     protected String description;

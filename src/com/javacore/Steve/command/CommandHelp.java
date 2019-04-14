@@ -1,6 +1,8 @@
 package com.javacore.Steve.command;
 
 import java.util.ArrayList;
+import static com.javacore.Steve.Application.ANSI_RESET;
+import static com.javacore.Steve.Application.ANSI_YELLOW;
 
 public class CommandHelp extends ACommand {
 

@@ -8,6 +8,8 @@ import java.util.*;
 import static com.javacore.Steve.Application.VERSION;
 import static com.javacore.Steve.Application.AUTHOR;
 import static com.javacore.Steve.Application.APP_NAME;
+import static com.javacore.Steve.Application.ANSI_RESET;
+import static com.javacore.Steve.Application.ANSI_YELLOW;
 
 public enum CommandRegistry {
     INSTANCE;
@@ -21,7 +23,7 @@ public enum CommandRegistry {
         commands.put("version", new ACommand("version") {
             @Override
             public void execute() {
-                System.out.println(ANSI_YELLOW +"My version is: " + VERSION + ANSI_RESET);
+                System.out.println(ANSI_YELLOW + "My version is: " + VERSION + ANSI_RESET);
             }
         });
 

@@ -17,7 +17,9 @@ public class StateExecutingCommand extends ApplicationState {
         else
             System.out.println("No such command available!");
 
-        Application.changeState(new StateIdle(), "Idle");
+        if (!commandName.equals("exit")) {
+            Application.changeState(new StateIdle(), "Idle");
+        }
     }
 
     @Override
