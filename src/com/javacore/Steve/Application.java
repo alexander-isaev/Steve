@@ -1,8 +1,14 @@
 package com.javacore.Steve;
 
+import com.javacore.Steve.common.ConsoleCanvas;
+import com.javacore.Steve.db.Record;
+import com.javacore.Steve.db.Table;
 import com.javacore.Steve.profile.ProfileController;
 import com.javacore.Steve.stage.ApplicationState;
 import com.javacore.Steve.stage.StateIdle;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -23,7 +29,77 @@ public class Application {
     static ApplicationState currentState;
 
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
+        List<String> columns = new ArrayList<>();
+        columns.add("id");
+        columns.add("firstName");
+        columns.add("lastName");
+        Table criminalTable = new Table("Criminals", columns);
+        List<String> values = new ArrayList<>();
+        List<String> values2 = new ArrayList<>();
+        values.add("1");
+        values.add("Vladimir");
+        values.add("Trampo");
+        values2.add("2");
+        values2.add("Donald");
+        values2.add("Timosh");
+        criminalTable.insert(new Record(values));
+        criminalTable.insert(new Record(values2));
+
+        List<String> result = criminalTable.selectField("firstName");
+        for (String s: result) {
+            System.out.println(s);
+        }
+
+
+        // Two options for creating threads.
+
+        // Runnable is an interface.
+//        Runnable runnable1 = new Runnable() {
+////            @Override
+////            public void run() {
+////                for (int i = 0; i < 100; i++) {
+////                    System.out.printf("-");
+////                    try {
+////                        Thread.sleep(100);
+////                    } catch (InterruptedException e) {
+////
+////                    }
+////                }
+////            }
+////        };
+
+//        Thread thread = new Thread() {
+//            @Override
+//            public void run() {
+//                for (int i = 0; i < 100; i++) {
+//                    System.out.print(".");
+//                    try {
+//                        Thread.sleep(500);
+//                    } catch (InterruptedException e) {
+//
+//                    }
+//                }
+//                System.out.println("done!");
+//            }
+//        };
+
+//        // Running two threads at the same time.
+//        System.out.printf(thread.getState() + ""); // Prints thread state.
+//        (new Thread(runnable1)).start();
+//        thread.start();
+//        System.out.printf(thread.getState() + "");
+
+//        System.out.print("\nLoading");
+//        thread.start();
+
+//        ConsoleCanvas consoleCanvas = new ConsoleCanvas(100,100);
+//        consoleCanvas.setSymbolAt(0,2,'A');
+//        consoleCanvas.draw();
+//        consoleCanvas.drawSquareAt(3,4, 4);
+
+        ///////////////////////////////////////////////////////////// OLD
+
+       /* Scanner in = new Scanner(System.in);
         String commandName;
         changeState(new StateIdle(), "Idle");
 
@@ -39,7 +115,7 @@ public class Application {
         // TODO: It should be a new command, this part shouldn't be here.
         System.out.println();
         ProfileController profileController = new ProfileController();
-        profileController.showProfile(7);
+        profileController.showProfile(7);*/
     }
 
     public static void changeState(ApplicationState newState, String commandName) {

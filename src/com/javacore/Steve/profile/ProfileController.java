@@ -16,7 +16,7 @@ public class ProfileController {
 
     {
         // ConsoleCanvas by default.
-        canvas = new ConsoleCanvas();
+        //canvas = new ConsoleCanvas();
         view = new ProfileView();
     }
 
