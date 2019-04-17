@@ -2,6 +2,8 @@ package com.javacore.Steve.profile;
 
 import com.javacore.Steve.common.BaseModel;
 
+import java.util.Date;
+
 /**
  * Contains data about one criminal profile.
  */
@@ -10,6 +12,9 @@ public class ProfileModel extends BaseModel {
     private int id;
     private String firstName;
     private String lastName;
+    private String nickname;
+    private int numberOfCrimes;
+    private Date dateOfBirth;
     private boolean active;
 
     public ProfileModel(int id, String firstName, String lastName, boolean active) {

@@ -1,13 +1,16 @@
 package com.javacore.Steve;
 
 import com.javacore.Steve.common.ConsoleCanvas;
+import com.javacore.Steve.db.DataBase;
 import com.javacore.Steve.db.Record;
 import com.javacore.Steve.db.Table;
 import com.javacore.Steve.profile.ProfileController;
 import com.javacore.Steve.stage.ApplicationState;
 import com.javacore.Steve.stage.StateIdle;
+import sun.tools.jconsole.Tab;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -29,26 +32,71 @@ public class Application {
     static ApplicationState currentState;
 
     public static void main(String[] args) {
-        List<String> columns = new ArrayList<>();
-        columns.add("id");
-        columns.add("firstName");
-        columns.add("lastName");
-        Table criminalTable = new Table("Criminals", columns);
-        List<String> values = new ArrayList<>();
-        List<String> values2 = new ArrayList<>();
-        values.add("1");
-        values.add("Vladimir");
-        values.add("Trampo");
-        values2.add("2");
-        values2.add("Donald");
-        values2.add("Timosh");
-        criminalTable.insert(new Record(values));
-        criminalTable.insert(new Record(values2));
 
-        List<String> result = criminalTable.selectField("firstName");
-        for (String s: result) {
-            System.out.println(s);
+        // We can't not to write try-catch with Throws exception.
+        List<String> records = DataBase.readDataFile("C/...");
+
+        
+
+        Table table = new Table("Criminals", Arrays.asList(new String[]{"id", "name", "deceased"}));
+        Record record = new Record(table);
+        record.setValues(new String[]{"100", "Anthony Soprano", "false"});
+        try {
+            System.out.println(record.getInt("id"));
+            System.out.println(record.getBoolean("deceased"));
+        } catch (Record.FieldNotFoundExeption ex) {
+            ex.printStackTrace();
+        } catch (NumberFormatException nfe) {
+            nfe.printStackTrace();
         }
+        System.out.println("All is ok, all exceptions have been caught!");
+
+//        DataBase db = new DataBase();
+//        Thread thread = new Thread() {
+//            @Override
+//            public void run() {
+//                try {
+//                    Thread.sleep(1000);
+//                    db.select();
+//                } catch (InterruptedException e) {
+//
+//                }
+//            }
+//        };
+//
+//        // While update hasn't done, select won't execute.
+//
+//       Runnable runnable1 = new Runnable() {
+//            @Override
+//            public void run() {
+//               db.update();
+//            }
+//        };
+//
+//       thread.start();
+//       (new Thread(runnable1)).start();
+
+
+//        List<String> columns = new ArrayList<>();
+//        columns.add("id");
+//        columns.add("firstName");
+//        columns.add("lastName");
+//        Table criminalTable = new Table("Criminals", columns);
+//        List<String> values = new ArrayList<>();
+//        List<String> values2 = new ArrayList<>();
+//        values.add("1");
+//        values.add("Vladimir");
+//        values.add("Trampo");
+//        values2.add("2");
+//        values2.add("Donald");
+//        values2.add("Timosh");
+//        criminalTable.insert(new Record(values));
+//        criminalTable.insert(new Record(values2));
+//
+//        List<String> result = criminalTable.selectField("firstName");
+//        for (String s: result) {
+//            System.out.println(s);
+//        }
 
 
         // Two options for creating threads.
@@ -68,17 +116,17 @@ public class Application {
 ////            }
 ////        };
 
-//        Thread thread = new Thread() {
-//            @Override
-//            public void run() {
-//                for (int i = 0; i < 100; i++) {
-//                    System.out.print(".");
-//                    try {
-//                        Thread.sleep(500);
-//                    } catch (InterruptedException e) {
+//       Thread thread1 = new Thread() {
+//           @Override
+//           public void run() {
+//               for (int i = 0; i < 100; i++) {
+//                   System.out.print(".");
+//                   try {
+//                       Thread.sleep(500);
+//                   } catch (InterruptedException e) {
 //
-//                    }
-//                }
+//                   }
+//               }
 //                System.out.println("done!");
 //            }
 //        };

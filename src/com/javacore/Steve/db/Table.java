@@ -43,6 +43,12 @@ public class Table {
 
     // DS.query(SELECT ID, NAME EMAIL FROM CRIMINAL WHERE ID = ?)
 
+    public List<String> getColumns () {
+
+        return columns;
+
+    }
+
 
     public List<String> selectField(String fieldName) {
         int index = columns.indexOf(fieldName);
