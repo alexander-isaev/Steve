@@ -9,7 +9,6 @@ public class Table {
     protected String name;
 
     protected List<String> columns;
-
     protected List<Record> records;
 
     {
@@ -30,7 +29,9 @@ public class Table {
     // It should get parameters like firstName or lastName.
     // IT ALSO SHOULD WORK WITH THREADS AND HAVE LOADING THING! i.e. it has to have thead.sleep.
     // SO IT WORK IN IT:S ON THREAD.
-    public void select(String quert) {};
+    public void select(String quert) {
+
+    };
 
     // Print on screen while calling select method.
     // ID      firstName       lastName
@@ -44,11 +45,8 @@ public class Table {
     // DS.query(SELECT ID, NAME EMAIL FROM CRIMINAL WHERE ID = ?)
 
     public List<String> getColumns () {
-
         return columns;
-
     }
-
 
     public List<String> selectField(String fieldName) {
         int index = columns.indexOf(fieldName);

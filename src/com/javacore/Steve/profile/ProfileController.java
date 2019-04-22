@@ -3,6 +3,9 @@ package com.javacore.Steve.profile;
 import com.javacore.Steve.common.Canvas;
 import com.javacore.Steve.common.ConsoleCanvas;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class ProfileController {
 
     //private ProfileModel model;
@@ -11,12 +14,18 @@ public class ProfileController {
 
     // Static block will be executed before any logical blocks or constructors.
     static {
-        ProfileStore.INSTANCE.loadRandomGeneratedProfiles(100);
+        //ProfileStore.INSTANCE.loadRandomGeneratedProfiles(100);
+        // JUST FOR TEST:
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        try {
+            ProfileStore.INSTANCE.loadProfile(new ProfileModel(1, "Dante", "Calabresi-Jr", null,1, simpleDateFormat.parse("01.01.1975"), null, true, simpleDateFormat.parse("16.10.2012"), "Highly dangerous. Was killed in 2012 by officer McKinzy."));
+        } catch (Exception e) {
+
+        }
     }
 
     {
-        // ConsoleCanvas by default.
-        //canvas = new ConsoleCanvas();
+        canvas = new ConsoleCanvas(60, 80);
         view = new ProfileView();
     }
 
@@ -26,7 +35,7 @@ public class ProfileController {
             System.out.println("No record with ID " + id);
         } else {
             view.setModel(profileModel);
-            view.draw(canvas);
+            view.drawProfile((ConsoleCanvas)canvas);
         }
     }
 

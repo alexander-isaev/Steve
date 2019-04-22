@@ -1,7 +1,5 @@
 package com.javacore.Steve.db;
 
-import com.sun.org.apache.xpath.internal.operations.String;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +11,7 @@ public class DataBase {
 
     Map<String, Table> tables;
 
-    public /*synchronized*/ List<Record> select() {
+    public List<Record> select() {
         // While tableLook has any other object, others won't be able to execute this code block.
         synchronized (tableLook) {
             System.out.println("Starting selecting records...");
@@ -29,9 +27,9 @@ public class DataBase {
     }
 
     public void update() {
-        // While one thread won't stop working with object others can't
+        // While one thread won't stop working with object others can't.
         System.out.println("Starting updating database...");
-        synchronized (tableLook){
+        synchronized (tableLook) {
             try {
                 Thread.sleep(10000);
                 System.out.println("Finished updating database!");
@@ -41,32 +39,38 @@ public class DataBase {
         }
     }
 
-    public static List<String[]> readDataFile(String fieldName) {
-        FileInputStream fis = null;
-        List<java.lang.String[]> result = new ArrayList<>();
-        BufferedReader br;
+    public static List<String[]> readDataFile(String fileName) {
+        FileInputStream fileInputStream = null;
+        List<String[]> result = new ArrayList<>();
+        BufferedReader bufferedReader;
         try {
-            fis = new FileInputStream(fieldName);
-            br = new BufferedReader(new InputStreamReader(fis));
+            fileInputStream = new FileInputStream(fileName);
+            bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
             String line;
-            while ((line = br.readLine()) != null) {
-                System.out.println(line);
+            while ((line = bufferedReader.readLine()) != null) {
+                System.out.println("Source line: " + line);
+                if (line.indexOf("#") == -1){
+                    result.add(line.split(";"));
+                }
             }
-        } catch (FileNotFoundException fnfe) {
-
-        } catch (IOException ioex) {
-
+        } catch (FileNotFoundException fileNotFoundException) {
+            fileNotFoundException.printStackTrace();
+        } catch (IOException iOException) {
+            iOException.printStackTrace();
         } finally {
             try {
-                fis.close();
+                fileInputStream.close();
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (NullPointerException nPE) {
+                nPE.printStackTrace();
             }
         }
+        return result;
     }
 
     public void delete() {
-
+        System.out.println("Deleting...");
     }
 
     public void insert(Record record, Table table) {

@@ -17,12 +17,12 @@ public enum ProfileStore {
     }
 
     // Actually there will be less then numberOfProfiles.
-    public void loadRandomGeneratedProfiles(int numberOfProfiles) {
-        for (int i = 0; i < numberOfProfiles; i++) {
-            ProfileModel model = ProfileModel.randomModel();
-            profiles.put(model.getId(), model);
-        }
-    }
+//    public void loadRandomGeneratedProfiles(int numberOfProfiles) {
+//        for (int i = 0; i < numberOfProfiles; i++) {
+//            ProfileModel model = ProfileModel.randomModel();
+//            profiles.put(model.getId(), model);
+//        }
+//    }
 
     public void loadProfile(ProfileModel model) { profiles.put(model.getId(), model); }
 

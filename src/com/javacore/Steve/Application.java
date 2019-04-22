@@ -1,15 +1,12 @@
 package com.javacore.Steve;
 
-import com.javacore.Steve.common.ConsoleCanvas;
 import com.javacore.Steve.db.DataBase;
 import com.javacore.Steve.db.Record;
 import com.javacore.Steve.db.Table;
 import com.javacore.Steve.profile.ProfileController;
 import com.javacore.Steve.stage.ApplicationState;
 import com.javacore.Steve.stage.StateIdle;
-import sun.tools.jconsole.Tab;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -33,23 +30,28 @@ public class Application {
 
     public static void main(String[] args) {
 
-        // We can't not to write try-catch with Throws exception.
-        List<String> records = DataBase.readDataFile("C/...");
-
-        
-
-        Table table = new Table("Criminals", Arrays.asList(new String[]{"id", "name", "deceased"}));
-        Record record = new Record(table);
-        record.setValues(new String[]{"100", "Anthony Soprano", "false"});
-        try {
-            System.out.println(record.getInt("id"));
-            System.out.println(record.getBoolean("deceased"));
-        } catch (Record.FieldNotFoundExeption ex) {
-            ex.printStackTrace();
-        } catch (NumberFormatException nfe) {
-            nfe.printStackTrace();
+        List<String[]> records = DataBase.readDataFile("C:\\Users\\JATragedian\\IdeaProjects\\Steve-Project\\Criminals Data.txt");
+        Table table = new Table("Criminals", Arrays.asList(new String[]{
+                "id",
+                "firstName",
+                "lastName",
+                "nickname",
+                "crimeFamilyId",
+                "dateOfBirth",
+                "deceased",
+                "dateOfDeath",
+                "numberOfCrimes"}));
+        for(String[] s : records) {
+            Record rec = new Record(table);
+            rec.setValues(s);
+            table.insert(rec);
         }
-        System.out.println("All is ok, all exceptions have been caught!");
+
+        System.out.println();
+        ProfileController profileController = new ProfileController();
+        profileController.showProfile(1);
+
+        //////////////////////////////////// Threads example:
 
 //        DataBase db = new DataBase();
 //        Thread thread = new Thread() {
@@ -66,16 +68,18 @@ public class Application {
 //
 //        // While update hasn't done, select won't execute.
 //
-//       Runnable runnable1 = new Runnable() {
+//        Runnable runnable1 = new Runnable() {
 //            @Override
 //            public void run() {
-//               db.update();
+//                db.update();
 //            }
 //        };
-//
-//       thread.start();
-//       (new Thread(runnable1)).start();
 
+//        // We should close all threads in the end.
+//        (new Thread(runnable1)).start();
+//        thread.start();
+
+        /////////////////////////////////////// Adding new records example (must be redone):
 
 //        List<String> columns = new ArrayList<>();
 //        columns.add("id");
@@ -98,23 +102,7 @@ public class Application {
 //            System.out.println(s);
 //        }
 
-
-        // Two options for creating threads.
-
-        // Runnable is an interface.
-//        Runnable runnable1 = new Runnable() {
-////            @Override
-////            public void run() {
-////                for (int i = 0; i < 100; i++) {
-////                    System.out.printf("-");
-////                    try {
-////                        Thread.sleep(100);
-////                    } catch (InterruptedException e) {
-////
-////                    }
-////                }
-////            }
-////        };
+        //////////////////////////////////////// Loading example:
 
 //       Thread thread1 = new Thread() {
 //           @Override
@@ -131,39 +119,23 @@ public class Application {
 //            }
 //        };
 
-//        // Running two threads at the same time.
-//        System.out.printf(thread.getState() + ""); // Prints thread state.
-//        (new Thread(runnable1)).start();
-//        thread.start();
-//        System.out.printf(thread.getState() + "");
-
 //        System.out.print("\nLoading");
 //        thread.start();
 
-//        ConsoleCanvas consoleCanvas = new ConsoleCanvas(100,100);
-//        consoleCanvas.setSymbolAt(0,2,'A');
-//        consoleCanvas.draw();
-//        consoleCanvas.drawSquareAt(3,4, 4);
+        ///////////////////////////////////////////////////////////// Application example:
 
-        ///////////////////////////////////////////////////////////// OLD
-
-       /* Scanner in = new Scanner(System.in);
-        String commandName;
-        changeState(new StateIdle(), "Idle");
-
-        do {
-            System.out.print(ANSI_BLUE + "Me: ");
-            commandName = in.nextLine();
-            System.out.print(ANSI_RESET);
-
-            currentState.onCommand(commandName);
-        } while (!commandName.equals("exit"));
-        // TODO: Exit command.
-
-        // TODO: It should be a new command, this part shouldn't be here.
-        System.out.println();
-        ProfileController profileController = new ProfileController();
-        profileController.showProfile(7);*/
+//        Scanner in = new Scanner(System.in);
+//        String commandName;
+//        changeState(new StateIdle(), "Idle");
+//
+//        do {
+//            System.out.print(ANSI_BLUE + "Me: ");
+//            commandName = in.nextLine();
+//            System.out.print(ANSI_RESET);
+//
+//            currentState.onCommand(commandName);
+//        } while (!commandName.equals("exit"));
+//        // TODO: Exit command.
     }
 
     public static void changeState(ApplicationState newState, String commandName) {
