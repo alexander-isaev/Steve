@@ -1,9 +1,10 @@
 package com.epam.javacore2019.steve2;
 
-import com.epam.javacore2019.steve2.db.server_old.DBApplication;
-import com.epam.javacore2019.steve2.db.misc.Utils;
-import com.epam.javacore2019.steve2.db.misc.XMLDocumentHandler;
-import com.epam.javacore2019.steve2.db.misc.DBConstants;
+import com.epam.javacore2019.steve2.dbservice.server_old.DBApplication;
+import com.epam.javacore2019.steve2.dbservice.misc.Utils;
+import com.epam.javacore2019.steve2.dbservice.misc.XMLDocumentHandler;
+import com.epam.javacore2019.steve2.dbservice.misc.DBConstants;
+import com.epam.javacore2019.steve2.webservice.WebClientApplication;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -11,9 +12,15 @@ import org.w3c.dom.NodeList;
 public class MainApplication {
 
     public static void main(String[] args) {
-        DBApplication.INSTANCE.start();
+        DBApplication.INSTANCE.start(); // Starting DB app.
         //DBApplication.INSTANCE.stop();
         //testXMLReader();
+
+        try {
+            WebClientApplication.INSTANCE.start(); // Starting Web app.
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
